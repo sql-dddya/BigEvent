@@ -7,6 +7,7 @@
  自定义注解：创建注解（画瓢），创建校验规则类 继承一个类 重写isValid方法；
  分组校验：group指定校验属于那个组，默认default，组之间可继承；
  测试类上的注解：@SpringTest：在单元测试启动前，会先初始化Spring的容器。
+ mybaatis上的一些注解：@NoArgsConstructor、@AllArgsConstructor、@Data；无参、全参构造，get set方法；
 3. token JWT令牌
   用户需要凭证，由权限才可以访问其他接口。所以在登陆时服务器生成token返回给浏览器，在访问其他接口时需要先验证token。
   生成令牌和解析令牌； token分为三段：加密算法.用户信息.签名值；
@@ -24,5 +25,8 @@
 4. mybatis
   下划线命名和驼峰命名的自动转换；配置文件中配置
 5. 全局异常处理器
+   使用到注解：@RestControllerAdvice 可以全局捕获指定异常，进行处理。 指定异常用注解：@ExceptionHandler(Exception.class)；
 6. Result类
+   属性；code msg data; 定义 success 和 erro 的方法
+   
  
