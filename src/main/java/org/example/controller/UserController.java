@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import jakarta.validation.constraints.Pattern;
-import lombok.val;
 import org.example.pojo.Result;
 import org.example.pojo.User;
 import org.example.service.UserService;
@@ -9,13 +8,15 @@ import org.example.util.JwtUtil;
 import org.example.util.Md5Util;
 import org.example.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -24,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 
     /**
      * 注册
@@ -69,6 +73,12 @@ public class UserController {
         claims.put("id", id);
         claims.put("username", username);
         String token = JwtUtil.genToken(claims);
+
+        // 将token存入redis
+        ValueOperations<String,String> operations = stringRedisTemplate.opsForValue();
+        operations.set(token,token,1, TimeUnit.HOURS);
+
+        // 将token返回给浏览器
         return Result.success(token);
     }
 
@@ -120,7 +130,7 @@ public class UserController {
      * @return
      */
     @PatchMapping("/updatePwd")
-    public Result updatePwd(@RequestBody Map<String,Object> params){
+    public Result updatePwd(@RequestBody Map<String,Object> params, @RequestHeader("Authorization") String token){
         // 参数校验
         String oldPwd = (String) params.get("old_pwd");
         String newPwd = (String) params.get("new_pwd");
@@ -147,6 +157,11 @@ public class UserController {
 
         // 更新密码
         userService.updatePwd(user.getId(), newPwd);
+
+        // 删除redis中的数据
+        ValueOperations<String,String> operations = stringRedisTemplate.opsForValue();
+        operations.getOperations().delete(token);
+
         return Result.success();
     }
 
