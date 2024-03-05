@@ -28,5 +28,8 @@
    使用到注解：@RestControllerAdvice 可以全局捕获指定异常，进行处理。 指定异常用注解：@ExceptionHandler(Exception.class)；
 6. Result类
    属性；code msg data; 定义 success 和 erro 的方法
+7. 项目部署
+   环境配置优先级
+   多环境开发profile：单文件；多文件；分组；
    
  
