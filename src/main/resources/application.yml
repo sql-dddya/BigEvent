@@ -1,4 +1,7 @@
+# 多环境共同的部分&指定激活那个环境
 spring:
+  profiles:
+    active: dev  # 指定当前激活的时开发环境
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/big_event
@@ -12,4 +15,25 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true  #开启驼峰命名和下划线命名的自动转换
+---
+#开发环境
+spring:
+  config:
+    activate:
+      on-profile: dev
+server:
+  port: 8081
+
+---
+#测试环境
+spring:
+  config:
+    activate:
+      on-profile: test
+server:
+  port: 8082
+
+
+
+
 
