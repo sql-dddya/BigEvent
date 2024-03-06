@@ -1,3 +1,5 @@
+第一版本：SpringBoot + mybatis
+第二版本：SpringBoot + mybatisPlus[简化单表查询 + 优化分页查询]
 按照黑马的教程，基本完成了大事件后端的开发，除了文件上传到阿里云没有实现。
 收获：
 1. 了解了spring Boot的注解 
