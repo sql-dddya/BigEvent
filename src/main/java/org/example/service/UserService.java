@@ -1,13 +1,14 @@
 package org.example.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.pojo.User;
 
-public interface UserService {
+public interface UserService extends IService{
     User findByName(String username);
 
-    void register(String username, String password);
+//    void register(String username, String password);
 
-    void updateUserInfo(User user);
+//    void updateUserInfo(User user);
 
     void updateAvatar(String avatarUrl);
 

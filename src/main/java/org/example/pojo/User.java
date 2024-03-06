@@ -2,6 +2,8 @@ package org.example.pojo;
 
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @Data
 public class User {
     @NotNull
+    @TableId(type = IdType.AUTO)
     private Integer id;//主键ID
 
     private String username;//用户名

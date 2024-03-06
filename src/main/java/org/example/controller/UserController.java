@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.validation.constraints.Pattern;
 import org.example.pojo.Result;
 import org.example.pojo.User;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static java.time.LocalDateTime.now;
 
 @RestController
 @RequestMapping("/user")
@@ -38,13 +41,22 @@ public class UserController {
     @PostMapping("/register")
     public Result register(@Pattern(regexp = "^.{5,16}$") String username, @Pattern(regexp = "^.{5,16}$") String password){
         // 查看当前用户是否存在
-        User user = userService.findByName(username);
-        if(user != null){
+        User u = userService.findByName(username);
+        if(u != null){
             return Result.error("当前用户已存在");
         }
 
+//        userService.register(username, password);
+
         // 注册
-        userService.register(username, password);
+        String Md5Password = Md5Util.getMD5String(password);
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(Md5Password);
+        user.setCreateTime(now());
+        user.setUpdateTime(now());
+        userService.save(user);
+
         return Result.success();
     }
 
@@ -108,7 +120,8 @@ public class UserController {
      */
     @PutMapping("/update")
     public Result updateUserInfo(@RequestBody @Validated User user){
-        userService.updateUserInfo(user);
+//        userService.updateUserInfo(user);
+        userService.updateById(user);
         return Result.success();
     }
 
@@ -119,8 +132,12 @@ public class UserController {
      */
     @PatchMapping("/updateAvatar")
     public Result updateAvatar(@RequestParam String avatarUrl){
-        // 从token中获取用户名
+/*          // 方法一
+        userService.updateAvatar(avatarUrl);*/
+
+        // 方法二：从ThreadLocal 中获取用户id, 使用条件构造器
         userService.updateAvatar(avatarUrl);
+
         return Result.success();
     }
 

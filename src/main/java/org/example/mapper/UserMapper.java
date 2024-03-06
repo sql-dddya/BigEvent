@@ -1,19 +1,19 @@
 package org.example.mapper;
 
-import org.apache.ibatis.annotations.Insert;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.example.pojo.User;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
     User findByname(String username);
 
-    void register(String username, String password);
+//    void register(String username, String password);
 
-    void updateUserInfo(User user);
+//    void updateUserInfo(User user);
 
-    void updateAvatar(String avatarUrl, Integer id);
+//    void updateAvatar(String avatarUrl, Integer id);
 
-    void updatePwd(Integer id, String password);
+//    void updatePwd(Integer id, String password);
 }

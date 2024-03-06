@@ -12,9 +12,27 @@ spring:
       port: 6379
       host: localhost
 
-mybatis:
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true  #开启驼峰命名和下划线命名的自动转换
+
+mybatis-plus:
+
+#  config-location: classpath:mybatis-config.xml #mybatis 的配置文件路径,目前也用不到
+#  mapper-locations: classpath:mapper/*Mapper.xml   #省略mapper文件的@Mapper注释
+  type-aliases-package: pojo   #批量注册指定包下的类，在mapper.xml 中就不需要类的全类名
   configuration:
-    map-underscore-to-camel-case: true  #开启驼峰命名和下划线命名的自动转换
+    map-underscore-to-camel-case: true  #开启驼峰命名
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#  #以下是数据库策略，目前用不到
+#  global-config:
+#    #数据库配置
+#    db-config:
+#       id-type: auto       #id自增长
+#      table-prefix: tb_    #表名前缀为tb_，表名为前缀拼接类名
+
+
 ---
 #开发环境
 spring:
@@ -22,7 +40,7 @@ spring:
     activate:
       on-profile: dev
 server:
-  port: 8081
+  port: 8080
 
 ---
 #测试环境
@@ -31,7 +49,7 @@ spring:
     activate:
       on-profile: test
 server:
-  port: 8082
+  port: 8081
 
 
 
