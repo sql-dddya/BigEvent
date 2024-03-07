@@ -1,22 +1,18 @@
 package org.example.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import lombok.val;
 import org.example.mapper.ArticleMapper;
 import org.example.pojo.Article;
-import org.example.pojo.PageBean;
 import org.example.pojo.QueryResult;
 import org.example.service.ArticleService;
 import org.example.util.ThreadLocalUtil;
-import org.springframework.aop.scope.DefaultScopedObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -88,6 +84,33 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         qr.setPage(page.getPages());
         qr.setItems(page.getRecords());
         return qr;
+    }
+
+    @Override
+    public List<Article> listDetail(List<Integer> ids) {
+        List<Article> list = articleMapper.listDetail(ids);
+        return list;
+    }
+
+    @Override
+    public List<Article> titleSelect(String name) {
+        List<Article> list = articleMapper.titleSelect(name);
+        return list;
+    }
+
+    @Override
+    public List<Article> cadata() {
+        List<Article> list = articleMapper.cadata();
+        return list;
+    }
+
+    @Override
+    public List<Article> articleList(String key, String state) {
+        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper();
+        wrapper.like(Article::getContent, key)
+                .eq(Article::getState, state);
+        List<Article> list = articleMapper.articleList(wrapper);
+        return list;
     }
 
 //    @Override

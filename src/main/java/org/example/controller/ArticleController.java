@@ -1,10 +1,7 @@
 package org.example.controller;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.apache.logging.log4j.MarkerManager;
 import org.example.pojo.Article;
-import org.example.pojo.PageBean;
 import org.example.pojo.QueryResult;
 import org.example.pojo.Result;
 import org.example.service.ArticleService;
@@ -12,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/article")
@@ -78,5 +76,48 @@ public class ArticleController {
 //        articleService.delete(id);
         articleService.removeById(id);
         return Result.success();
+    }
+
+    /**
+     * 查询多个文章详情
+     * @param ids
+     * @return
+     */
+    @GetMapping("/listDetail")
+    public Result<List<Article>> listDetail(@RequestParam List<Integer> ids){
+        List<Article> list = articleService.listDetail(ids);
+        return Result.success(list);
+    }
+
+    /**
+     * title 模糊查询
+     * @param name
+     * @return
+     */
+    @GetMapping("/titleSelect")
+    public Result<List<Article>> titleSelect(@RequestParam String name){
+        List<Article> list = articleService.titleSelect(name);
+        return Result.success(list);
+    }
+
+    /**
+     * 获取今天比今天更早的文章
+     * @return
+     */
+    @GetMapping("/cadata")
+    public Result<List<Article>> cadata(){
+        List<Article> list = articleService.cadata();
+        return Result.success(list);
+    }
+
+    /**
+     * 测试自定义sql 提取筛选信息
+     * @return
+     */
+    @GetMapping("/articleList")
+    public Result<List<Article>> articleList(String key, String state){
+        List<Article> list = articleService.articleList(key,state);
+        return Result.success(list);
+
     }
 }

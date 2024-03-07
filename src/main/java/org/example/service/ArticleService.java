@@ -6,6 +6,8 @@ import org.example.pojo.Article;
 import org.example.pojo.PageBean;
 import org.example.pojo.QueryResult;
 
+import java.util.List;
+
 public interface ArticleService extends IService<Article> {
     void add(Article article);
 
@@ -14,6 +16,14 @@ public interface ArticleService extends IService<Article> {
     void update(Article article);
 
     QueryResult<Article> list(Integer pageNum, Integer pageSize, Integer categoryId, String state);
+
+    List<Article> listDetail(List<Integer> ids);
+
+    List<Article> titleSelect(String name);
+
+    List<Article> cadata();
+
+    List<Article> articleList(String key, String state);
 
 //    Article get(Integer id);
 //
