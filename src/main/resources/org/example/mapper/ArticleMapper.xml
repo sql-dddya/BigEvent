@@ -22,23 +22,23 @@
         </where>
     </select>
 
-    <update id="update">
-        update article
-        set title=#{title}, content=#{content}, cover_img=#{coverImg},
-            state=#{state}, category_id=#{categoryId}, update_time=#{updateTime}
-        where id=#{id}
-    </update>
+<!--    <update id="update">-->
+<!--        update article-->
+<!--        set title=#{title}, content=#{content}, cover_img=#{coverImg},-->
+<!--            state=#{state}, category_id=#{categoryId}, update_time=#{updateTime}-->
+<!--        where id=#{id}-->
+<!--    </update>-->
 
-    <select id="get" resultType="org.example.pojo.Article">
-        select *
-        from article
-        where id=#{id}
-    </select>
+<!--    <select id="get" resultType="org.example.pojo.Article">-->
+<!--        select *-->
+<!--        from article-->
+<!--        where id=#{id}-->
+<!--    </select>-->
 
-    <delete id="delete">
-        delete from article
-        where id=#{id}
-    </delete>
+<!--    <delete id="delete">-->
+<!--        delete from article-->
+<!--        where id=#{id}-->
+<!--    </delete>-->
 
 
 </mapper>

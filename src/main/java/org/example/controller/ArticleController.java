@@ -1,9 +1,11 @@
 package org.example.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.logging.log4j.MarkerManager;
 import org.example.pojo.Article;
 import org.example.pojo.PageBean;
+import org.example.pojo.QueryResult;
 import org.example.pojo.Result;
 import org.example.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +36,13 @@ public class ArticleController {
      * @return
      */
     @GetMapping
-    public Result<PageBean<Article>> list(Integer pageNum, Integer pageSize,
-                                          @RequestBody(required = false) Integer categoryId,
-                                          @RequestBody(required = false) String state){
+    public Result<QueryResult<Article>> list(Integer pageNum, Integer pageSize,
+                                             @RequestParam(required = false) Integer categoryId,
+                                             @RequestParam(required = false) String state){
 
-        PageBean<Article> pb = articleService.list(pageNum, pageSize, categoryId, state);
-        return Result.success(pb);
+//        PageBean<Article> pb = articleService.list(pageNum, pageSize, categoryId, state);
+        QueryResult<Article> p = articleService.list(pageNum,pageSize,categoryId,state);
+        return Result.success(p);
     }
 
     /**
@@ -60,7 +63,8 @@ public class ArticleController {
      */
     @GetMapping("/detail")
     public Result get(@RequestParam Integer id){
-        Article article = articleService.get(id);
+//        Article article = articleService.get(id);
+        Article article = articleService.getById(id);
         return Result.success(article);
     }
 
@@ -71,7 +75,8 @@ public class ArticleController {
      */
     @DeleteMapping
     public Result delete(@RequestParam Integer id){
-        articleService.delete(id);
+//        articleService.delete(id);
+        articleService.removeById(id);
         return Result.success();
     }
 }

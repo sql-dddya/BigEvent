@@ -1,20 +1,29 @@
 package org.example.service.impl;
 
 
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
+import lombok.val;
 import org.example.mapper.ArticleMapper;
 import org.example.pojo.Article;
 import org.example.pojo.PageBean;
+import org.example.pojo.QueryResult;
 import org.example.service.ArticleService;
 import org.example.util.ThreadLocalUtil;
+import org.springframework.aop.scope.DefaultScopedObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class ArticleServiceImpl implements ArticleService {
+public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     @Autowired
     private ArticleMapper articleMapper;
@@ -31,7 +40,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleMapper.add(article);
     }
 
-    @Override
+/*    @Override
     public PageBean<Article> list(Integer pageNum, Integer pageSize, Integer categoryId, String state) {
         // 创建PageBean对象
         PageBean<Article> pb = new PageBean<>();
@@ -48,21 +57,46 @@ public class ArticleServiceImpl implements ArticleService {
         pb.setTotal(Long.valueOf(as.size()));
         pb.setItems(as);
         return pb;
-    }
+    }*/
 
     @Override
     public void update(Article article) {
         article.setUpdateTime(LocalDateTime.now());
-        articleMapper.update(article);
+//        articleMapper.update(article);
+        articleMapper.updateById(article);
     }
 
     @Override
-    public Article get(Integer id) {
-        return articleMapper.get(id);
+    public QueryResult<Article> list(Integer pageNum, Integer pageSize, Integer categoryId, String state) {
+        // 分页条件
+        Page<Article> p = new Page<>();
+        p.setCurrent(pageNum);
+        p.setSize(pageSize);
+
+        // 排序条件
+        p.addOrder(new OrderItem("category_id", false));
+
+        // 查询条件 并将分页条件应用
+        Page<Article> page = lambdaQuery()
+                .eq(!ObjectUtils.isEmpty(categoryId), Article::getCategoryId, categoryId)
+                .eq(state != null, Article::getState, state)
+                .page(p);
+
+        // 封装结果
+        QueryResult<Article> qr = new QueryResult<>();
+        qr.setTotal(page.getTotal());
+        qr.setPage(page.getPages());
+        qr.setItems(page.getRecords());
+        return qr;
     }
 
-    @Override
-    public void delete(Integer id) {
-        articleMapper.delete(id);
-    }
+//    @Override
+//    public Article get(Integer id) {
+//        return articleMapper.get(id);
+//    }
+//
+//    @Override
+//    public void delete(Integer id) {
+//        articleMapper.delete(id);
+//    }
 }
