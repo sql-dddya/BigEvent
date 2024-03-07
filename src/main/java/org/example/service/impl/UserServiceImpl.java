@@ -1,8 +1,6 @@
 package org.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
-import com.baomidou.mybatisplus.extension.conditions.update.UpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.val;
 import org.example.mapper.UserMapper;
@@ -12,14 +10,13 @@ import org.example.util.Md5Util;
 import org.example.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.ObjectError;
 
 import java.util.Map;
 
 import static java.time.LocalDateTime.now;
 
 @Service
-public class UserServiceImpl extends ServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
     private UserMapper userMapper;
