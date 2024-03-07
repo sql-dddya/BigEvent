@@ -4,28 +4,28 @@
 
 <mapper namespace="org.example.mapper.CategoryMapper">
 
-    <insert id="addCategory">
-        insert into category(category_name, category_alias, create_user, create_time, update_time)
-        values(#{categoryName}, #{categoryAlias},#{createUser},#{createTime},#{updateTime})
-    </insert>
+<!--    <insert id="addCategory">-->
+<!--        insert into category(category_name, category_alias, create_user, create_time, update_time)-->
+<!--        values(#{categoryName}, #{categoryAlias},#{createUser},#{createTime},#{updateTime})-->
+<!--    </insert>-->
 
-    <select id="get" resultType="org.example.pojo.Category">
-        select * from category
-    </select>
+<!--    <select id="get" resultType="org.example.pojo.Category">-->
+<!--        select * from category-->
+<!--    </select>-->
 
-    <select id="getDetail" resultType="org.example.pojo.Category">
-        select * from category where id=#{id}
-    </select>
+<!--    <select id="getDetail" resultType="org.example.pojo.Category">-->
+<!--        select * from category where id=#{id}-->
+<!--    </select>-->
 
-    <update id="update">
-        update category
-        set category_name=#{categoryName},category_alias=#{categoryAlias}
-        where id=#{id}
-    </update>
+<!--    <update id="update">-->
+<!--        update category-->
+<!--        set category_name=#{categoryName},category_alias=#{categoryAlias}-->
+<!--        where id=#{id}-->
+<!--    </update>-->
 
-    <delete id="delete">
-        delete from category where id = #{id}
-    </delete>
+<!--    <delete id="delete">-->
+<!--        delete from category where id = #{id}-->
+<!--    </delete>-->
 
     <select id="getByName" resultType="org.example.pojo.Category">
         select * from category where category_name = #{categoryName}

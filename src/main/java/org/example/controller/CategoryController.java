@@ -36,7 +36,8 @@ public class CategoryController {
      */
     @GetMapping
     public Result get(){
-        List<Category> list = categoryService.get();
+//        List<Category> list = categoryService.get();
+        List<Category> list = categoryService.list();
         return Result.success(list);
     }
 
@@ -47,7 +48,8 @@ public class CategoryController {
      */
     @GetMapping("/detail")
     public Result getDetail(@RequestParam Integer id){
-        Category category = categoryService.getDetail(id);
+//        Category category = categoryService.getDetail(id);
+        Category category = categoryService.getById(id);
         return Result.success(category);
     }
 
@@ -69,7 +71,8 @@ public class CategoryController {
      */
     @DeleteMapping
     public Result delete(@RequestParam Integer id){
-        categoryService.delete(id);
+//        categoryService.delete(id);
+        categoryService.removeById(id);
         return Result.success();
     }
 

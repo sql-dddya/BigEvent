@@ -1,5 +1,7 @@
 package org.example.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.groups.Default;
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class Category {
     @NotNull(groups = Update.class)
+    @TableId(type = IdType.AUTO)
     private Integer id;//主键ID
     @NotEmpty
     private String categoryName;//分类名称
